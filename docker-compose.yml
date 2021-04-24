@@ -2,6 +2,7 @@ version: "3"
 
 services:
     covid-bot:
+        image: t1il/covid-bot
         container_name: covid-bot
         build: .
         env_file: .env

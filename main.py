@@ -29,20 +29,78 @@ class general_stuff(commands.Cog):
 
     @commands.command()
     async def update(self, message):
-        cases.updateData()
-        embed = discord.Embed(title="Cdddorona-Zahlen Landkreis Ludwigsburg", color=0x00ffff,
+
+        emoji_lb = "<:lb:835461187319234570>"
+        emoji_de = "🇩🇪"
+
+        deaths_lb = cases.getValue("Tode_Gesamt")
+        cases_lb = cases.getValue("Faelle_Gesamt")
+
+        deaths_de = cases.getDeathsInGermany()
+        cases_de = cases.getAllCasesInGermany()
+
+        ratio_lb = (float(float(deaths_lb) * 100 / float(cases_lb)))
+        ratio_de = (float(float(deaths_de) * 100 / float(cases_de)))
+
+        embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de,
+                              color=0x00ffff,
                               timestamp=datetime.datetime.utcnow())
-        embed.add_field(name="Korntal-Münchingen", value="Aktive Fälle: " + cases.getCasesIn("KorntalMuenchingen"),
+
+        cases_km = cases.getCasesIn("KorntalMuenchingen")
+        cases_sd = cases.getCasesIn("Schwieberdingen")
+        cases_hm = cases.getCasesIn("Hemmingen")
+
+        embed.add_field(name="Korntal-Münchingen",
+                        value=cases_km + " // " + str(round(float(cases_km)*5.07150827)) + "7TI",
                         inline=True)
-        embed.add_field(name="Schwieberdingen", value="Aktive Fälle: " + cases.getCasesIn("Schwieberdingen"),
+
+        embed.add_field(name="Schwieberdingen",
+                        value=cases_sd + " // " + str(round(float(cases_hm)*8.77963126)) + "7TI",
                         inline=True)
-        embed.add_field(name="Hemmingen", value="Aktive Fälle: " + cases.getCasesIn("Hemmingen"), inline=True)
-        ratio = (float(cases.getValue("Tode_Gesamt")) * 100 / int(cases.getValue("Faelle_Gesamt")))
-        embed.add_field(name="Todesrate Ludwigsburg",
-                        value=str(round(ratio, 2)) + "%",
+
+        embed.add_field(name="Hemmingen",
+                        value=cases_hm + " // " + str(round(float(cases_hm)*12.3777695)) + "7TI",
+                        inline=True)
+
+        ######################################################
+
+        embed.add_field(name="7-Tage-Inzidenz " + emoji_lb,
+                        value=cases.getValue("sieben_T_Inz"),
+                        inline=True)
+
+        embed.add_field(name="7 Tage Inzidenz " + emoji_de,
+                        value=cases.getSevenDayIncidence())
+
+        embed.add_field(name="Erhebungsdatum ⏲",
+                        value=cases.getValue("DashTime") + "/" + cases.getDateRKI(),
                         inline=False)
-        embed.add_field(name="Neue Fälle Deutschland (RKI)", value="+" + cases.getNewCasesInGermany(), inline=False)
-        embed.add_field(name="Datenerhebungsdatum", value=cases.getValue("DashTime"), inline=False)
+
+        ######################################################
+
+        embed.add_field(name="Mortalität " + emoji_lb,
+                        value=str(round(ratio_lb, 2)) + "%",
+                        inline=True)
+
+        embed.add_field(name="Mortalität " + emoji_de,
+                        value=str(round(ratio_de, 2)) + "%",
+                        inline=True)
+
+        embed.add_field(name="Mortalität 🌍",
+                        value="~2.81%",
+                        inline=False)
+
+        ######################################################
+
+        embed.add_field(name="Neue Fälle " + emoji_lb + " (ARCGIS)",
+                        value="+" + cases.getValue("Diff_Faelle_Gesamt"),
+                        inline=True)
+
+        embed.add_field(name="Neue Fälle " + emoji_de + " (RKI)",
+                        value="+" + cases.getNewCasesInGermany(),
+                        inline=True)
+
+        ######################################################
+
         embed.set_footer(text=message.author.name + "#" + message.author.discriminator,
                          icon_url=message.author.avatar_url)
         embed.set_thumbnail(
