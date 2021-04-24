@@ -30,7 +30,7 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
-        os.system("sh redeploy.sh")
+        os.system("sudo sh redeploy.sh")
 
     @commands.command()
     async def update(self, message):
