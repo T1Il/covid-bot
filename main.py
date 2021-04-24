@@ -28,6 +28,11 @@ class general_stuff(commands.Cog):
         await bot.logout()
 
     @commands.command()
+    @commands.is_owner()
+    async def redeploy(self, message):
+        os.system("sh redeploy.sh")
+
+    @commands.command()
     async def update(self, message):
 
         emoji_lb = "<:lb:835461187319234570>"
