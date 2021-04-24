@@ -4,8 +4,7 @@ from discord.ext import commands
 import sched, time
 import cases
 import os
-import requests
-import socket
+import subprocess
 
 s = sched.scheduler(time.time, time.sleep)
 bot = commands.Bot(command_prefix='?')
@@ -14,8 +13,8 @@ bot = commands.Bot(command_prefix='?')
 @bot.event
 async def on_ready():
     print("bot is ready for stuff")
-    bonk = os.system("git rev-parse --short HEAD")
-    await bot.change_presence(activity=discord.Game("auf Version " + str(bonk)),afk=True)
+    result = subprocess.check_output("git rev-parse --short HEAD", shell=True)
+    await bot.change_presence(activity=discord.Game("auf Version " + str(result)),afk=True)
 
 class general_stuff(commands.Cog):
 
