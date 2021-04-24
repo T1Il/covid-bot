@@ -4,6 +4,7 @@ from discord.ext import commands
 import sched, time
 import cases
 import os
+import requests
 
 s = sched.scheduler(time.time, time.sleep)
 bot = commands.Bot(command_prefix='?')
@@ -30,7 +31,8 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
-        os.system("sudo sh redeploy.sh")
+        await message.delete()
+        requests.get("localhost:9000/hooks/redeploy")
 
     @commands.command()
     async def update(self, message):
