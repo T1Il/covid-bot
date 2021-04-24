@@ -14,8 +14,8 @@ bot = commands.Bot(command_prefix='?')
 @bot.event
 async def on_ready():
     print("bot is ready for stuff")
-    user = await bot.get_user(321620714979590145)
-    user.send("hi")
+    channel = bot.get_channel(834100120316411946)
+    channel.edit(name="bonk")
     await bot.change_presence(activity=discord.Game("lol"),afk=True)
 
 class general_stuff(commands.Cog):
