@@ -31,7 +31,7 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
-        requests.get("http://127.0.0.1:9000/hooks/redeploy")
+        requests.get("http://localhost:9000/hooks/redeploy")
 
     @commands.command()
     async def update(self, message):
