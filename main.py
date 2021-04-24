@@ -51,15 +51,15 @@ class general_stuff(commands.Cog):
         cases_hm = cases.getCasesIn("Hemmingen")
 
         embed.add_field(name="Korntal-Münchingen",
-                        value=cases_km + " // " + str(round(float(cases_km)*5.07150827)) + "7TI",
+                        value=cases_km + " // " + str(round(float(cases_km)*5.07150827)),
                         inline=True)
 
         embed.add_field(name="Schwieberdingen",
-                        value=cases_sd + " // " + str(round(float(cases_hm)*8.77963126)) + "7TI",
+                        value=cases_sd + " // " + str(round(float(cases_hm)*8.77963126)),
                         inline=True)
 
         embed.add_field(name="Hemmingen",
-                        value=cases_hm + " // " + str(round(float(cases_hm)*12.3777695)) + "7TI",
+                        value=cases_hm + " // " + str(round(float(cases_hm)*12.3777695)),
                         inline=True)
 
         ######################################################
