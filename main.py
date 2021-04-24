@@ -32,9 +32,7 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
+        ip = socket.gethostbyname(socket.gethostname())
         print(ip)
         requests.get("http:/" + ip + ":9000/hooks/redeploy")
 
