@@ -32,7 +32,7 @@ class general_stuff(commands.Cog):
     @commands.is_owner()
     async def redeploy(self, message):
         await message.delete()
-        requests.get("localhost:9000/hooks/redeploy")
+        requests.get("http://0.0.0.0:9000/hooks/redeploy")
 
     @commands.command()
     async def update(self, message):
