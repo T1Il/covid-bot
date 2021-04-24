@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='?')
 async def on_ready():
     print("bot is ready for stuff")
     result = subprocess.check_output("git rev-parse --short HEAD", shell=True)
-    await bot.change_presence(activity=discord.Game("auf Version " + str(result)),afk=True)
+    await bot.change_presence(activity=discord.Game("auf Version " + str(result.decode('utf-8'))),afk=True)
 
 class general_stuff(commands.Cog):
 
