@@ -14,7 +14,8 @@ bot = commands.Bot(command_prefix='?')
 @bot.event
 async def on_ready():
     print("bot is ready for stuff")
-    await bot.change_presence(activity=discord.Game("lolreeeeee"),afk=True)
+    bonk = os.system("git rev-parse --short HEAD")
+    await bot.change_presence(activity=discord.Game("auf Version " + bonk),afk=True)
 
 class general_stuff(commands.Cog):
 
