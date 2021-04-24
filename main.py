@@ -5,6 +5,7 @@ import sched, time
 import cases
 import os
 import requests
+import socket
 
 s = sched.scheduler(time.time, time.sleep)
 bot = commands.Bot(command_prefix='?')
@@ -31,7 +32,11 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
-        requests.get("http://localhost:9000/hooks/redeploy")
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        print(ip)
+        requests.get("http:/" + ip + ":9000/hooks/redeploy")
 
     @commands.command()
     async def update(self, message):
