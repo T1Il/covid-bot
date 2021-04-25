@@ -62,7 +62,7 @@ class general_stuff(commands.Cog):
                         inline=True)
 
         embed.add_field(name="Schwieberdingen",
-                        value=cases_sd + " // " + str(round(float(cases_hm)*8.77963126)),
+                        value=cases_sd + " // " + str(round(float(cases_sd)*8.77963126)),
                         inline=True)
 
         embed.add_field(name="Hemmingen",
