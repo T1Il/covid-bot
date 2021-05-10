@@ -1,6 +1,5 @@
 import datetime
 import discord
-from discord import VoiceState
 from discord.ext import commands
 import sched, time
 import cases
@@ -27,34 +26,39 @@ class general_stuff(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def stop(self, message):
+    async def stop(self):
         print("stopping")
         await bot.logout()
 
     @commands.command()
     @commands.is_owner()
-    async def redeploy(self, message):
+    async def redeploy(self):
         await bot.logout()
         os.system("wget http://192.168.178.66:9000/hooks/redeploy")
 
     @commands.command()
-    @commands.is_owner()
-    async def auszeit(self, message):
-        print("Test")
-        if len(message.mentions) == 0:
-            print("Test2")
-            timeoutUserId = message.mentions[0].id
-            timeoutUser = message.guild.get_member(user_id=timeoutUserId)
-            rolesBefore = timeoutUser
-            await timeoutUser.remove_roles(rolesBefore)
+    @commands.has_role(783432061205610527)
+    async def auszeit(self, ctx, arg, arg2):
+        message = ctx.message
+        await message.delete()
+        if len(message.mentions) == 1:
+            timeoutUser = message.mentions[0]
+            rolesBefore = timeoutUser.roles
+
+            for role in rolesBefore:
+               if role.id != 402193346610855946:
+                   await timeoutUser.remove_roles(role)
 
             if not timeoutUser.voice.channel is None:
-                print("Test3")
                 old_channel = timeoutUser.voice.channel
-                await timeoutUser.move_to(message.guild.get_channel(channel_id=841330121788227664))
-                await asyncio.sleep(10)
+                auszeitchannel = message.guild.get_channel(channel_id=841330121788227664)
+                await timeoutUser.move_to(auszeitchannel)
+                await asyncio.sleep(float(arg2))
                 await timeoutUser.move_to(old_channel)
-                await timeoutUser.add_roles(rolesBefore)
+            for role in rolesBefore:
+                if role.id != 402193346610855946:
+                 await timeoutUser.add_roles(role)
+                 await timeoutUser.edit(mute=False)
 
 
 
@@ -140,4 +144,5 @@ class general_stuff(commands.Cog):
 
 
 bot.add_cog(general_stuff())
-bot.run(os.environ["BOT_TOKEN"])
+#bot.run(os.environ["BOT_TOKEN"])
+bot.run("NzEyODA0MDA2NzExMjYzMjY0.XsW4dg.LfU-csDjcLDDAfu8tSuniAlmoZU")
