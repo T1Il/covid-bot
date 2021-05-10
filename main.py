@@ -38,15 +38,18 @@ class general_stuff(commands.Cog):
         os.system("wget http://192.168.178.66:9000/hooks/redeploy")
 
     @commands.command()
-    @commands.has_role(783432061205610527)
+    @commands.is_owner()
     async def auszeit(self, message):
+        print("Test")
         if len(message.mentions) == 0:
+            print("Test2")
             timeoutUserId = message.mentions[0].id
             timeoutUser = message.guild.get_member(user_id=timeoutUserId)
             rolesBefore = timeoutUser
             await timeoutUser.remove_roles(rolesBefore)
 
             if not timeoutUser.voice.channel is None:
+                print("Test3")
                 old_channel = timeoutUser.voice.channel
                 await timeoutUser.move_to(message.guild.get_channel(channel_id=841330121788227664))
                 await asyncio.sleep(10)
