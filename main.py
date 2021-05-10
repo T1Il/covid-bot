@@ -1,10 +1,12 @@
 import datetime
 import discord
+from discord import VoiceState
 from discord.ext import commands
 import sched, time
 import cases
 import os
 import subprocess
+import asyncio
 
 s = sched.scheduler(time.time, time.sleep)
 bot = commands.Bot(command_prefix='?')
@@ -32,7 +34,26 @@ class general_stuff(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def redeploy(self, message):
+        await bot.logout()
         os.system("wget http://192.168.178.66:9000/hooks/redeploy")
+
+    @commands.command()
+    @commands.has_role(783432061205610527)
+    async def auszeit(self, message):
+        if len(message.mentions) == 0:
+            timeoutUserId = message.mentions[0].id
+            timeoutUser = message.guild.get_member(user_id=timeoutUserId)
+            rolesBefore = timeoutUser
+            await timeoutUser.remove_roles(rolesBefore)
+
+            if not timeoutUser.voice.channel is None:
+                old_channel = timeoutUser.voice.channel
+                await timeoutUser.move_to(message.guild.get_channel(channel_id=841330121788227664))
+                await asyncio.sleep(10)
+                await timeoutUser.move_to(old_channel)
+                await timeoutUser.add_roles(rolesBefore)
+
+
 
     @commands.command()
     async def update(self, message):
