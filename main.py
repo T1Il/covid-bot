@@ -144,5 +144,4 @@ class general_stuff(commands.Cog):
 
 
 bot.add_cog(general_stuff())
-#bot.run(os.environ["BOT_TOKEN"])
-bot.run("NzEyODA0MDA2NzExMjYzMjY0.XsW4dg.LfU-csDjcLDDAfu8tSuniAlmoZU")
+bot.run(os.environ["BOT_TOKEN"])
