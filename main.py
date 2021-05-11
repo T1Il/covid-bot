@@ -20,13 +20,13 @@ async def on_ready():
 class general_stuff(commands.Cog):
 
     @commands.command()
-    async def ree(self, message):
+    async def ree(self, ctx):
         print("lol")
-        await message.reply("ree")
+        await ctx.reply("ree")
 
     @commands.command()
     @commands.is_owner()
-    async def stop(self):
+    async def stop(self,ctx):
         print("stopping")
         await bot.logout()
 
