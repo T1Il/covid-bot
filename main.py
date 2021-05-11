@@ -32,7 +32,8 @@ class general_stuff(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def redeploy(self):
+    async def redeploy(self,ctx):
+        await ctx.message.delete()
         await bot.logout()
         os.system("wget http://192.168.178.66:9000/hooks/redeploy")
 
