@@ -60,13 +60,14 @@ class general_stuff(commands.Cog):
                  await timeoutUser.add_roles(role)
                  await timeoutUser.edit(mute=False)
 
-
-
     @commands.command()
     async def update(self, message):
 
         emoji_lb = "<:lb:835461187319234570>"
         emoji_de = "🇩🇪"
+
+        embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de, description="Loading data...", color=0xff0000)
+        message_new = await message.reply(embed=embed)
 
         deaths_lb = cases.getValue("Tode_Gesamt")
         cases_lb = cases.getValue("Faelle_Gesamt")
@@ -140,7 +141,7 @@ class general_stuff(commands.Cog):
                          icon_url=message.author.avatar_url)
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/464054727403896832/831636985897943080/303284178048211.png")
-        await message.reply(embed=embed)
+        await message_new.edit(embed=embed)
 
 
 bot.add_cog(general_stuff())
