@@ -90,7 +90,7 @@ class general_stuff(commands.Cog):
         prefix = ""
 
         if str(date_now) != lb_time:
-            prefix = "⚠️"
+            prefix = "⚠"
 
         embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de,
                               color=0x00ffff,
