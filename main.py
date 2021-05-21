@@ -18,6 +18,7 @@ async def on_ready():
     result = subprocess.check_output("git rev-parse --short HEAD", shell=True)
     await bot.change_presence(activity=discord.Game("auf Version " + str(result.decode('utf-8'))), afk=True)
 
+
 class general_stuff(commands.Cog):
 
     @commands.command()
@@ -27,13 +28,13 @@ class general_stuff(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def stop(self,ctx):
+    async def stop(self, ctx):
         print("stopping")
-        await bot.logout()
+        await bot.close()
 
     @commands.command()
     @commands.is_owner()
-    async def redeploy(self,ctx):
+    async def redeploy(self, ctx):
         await ctx.message.delete()
         await bot.logout()
         os.system("wget http://192.168.178.66:9000/hooks/redeploy")
@@ -48,8 +49,8 @@ class general_stuff(commands.Cog):
             rolesBefore = timeoutUser.roles
 
             for role in rolesBefore:
-               if role.id != 402193346610855946:
-                   await timeoutUser.remove_roles(role)
+                if role.id != 402193346610855946:
+                    await timeoutUser.remove_roles(role)
 
             if not timeoutUser.voice.channel is None:
                 old_channel = timeoutUser.voice.channel
@@ -59,8 +60,8 @@ class general_stuff(commands.Cog):
                 await timeoutUser.move_to(old_channel)
             for role in rolesBefore:
                 if role.id != 402193346610855946:
-                 await timeoutUser.add_roles(role)
-                 await timeoutUser.edit(mute=False)
+                    await timeoutUser.add_roles(role)
+                    await timeoutUser.edit(mute=False)
 
     @commands.command()
     async def update(self, message):
@@ -68,7 +69,8 @@ class general_stuff(commands.Cog):
         emoji_lb = "<:lb:835461187319234570>"
         emoji_de = "🇩🇪"
 
-        embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de, description="Loading data...", color=0xff0000)
+        embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de, description="Loading data...",
+                              color=0xff0000)
         message_new = await message.reply(embed=embed)
 
         deaths_lb = cases.getValue("Tode_Gesamt")
@@ -87,7 +89,7 @@ class general_stuff(commands.Cog):
         date_now = now.strftime("%d.%m.%Y")
         prefix = ""
 
-        if str(date_now) == lb_time:
+        if str(date_now) != lb_time:
             prefix = "⚠️"
 
         embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de,
@@ -99,15 +101,15 @@ class general_stuff(commands.Cog):
         cases_hm = prefix + cases.getCasesIn("Hemmingen")
 
         embed.add_field(name="Korntal-Münchingen",
-                        value=cases_km + " // " + str(round(float(cases_km)*5.07150827)),
+                        value=cases_km + " // " + str(round(float(cases_km) * 5.07150827)),
                         inline=True)
 
         embed.add_field(name="Schwieberdingen",
-                        value=cases_sd + " // " + str(round(float(cases_sd)*8.77963126)),
+                        value=cases_sd + " // " + str(round(float(cases_sd) * 8.77963126)),
                         inline=True)
 
         embed.add_field(name="Hemmingen",
-                        value=cases_hm + " // " + str(round(float(cases_hm)*12.3777695)),
+                        value=cases_hm + " // " + str(round(float(cases_hm) * 12.3777695)),
                         inline=True)
 
         ######################################################
