@@ -1,5 +1,5 @@
 import datetime
-from datetime import datetime
+from datetime import datetime as dt
 import discord
 from discord.ext import commands
 import sched, time
@@ -83,7 +83,7 @@ class general_stuff(commands.Cog):
         lb_time = cases.getValue("DashTime")
         de_time = cases.getDateRKI()
 
-        now = datetime.now()
+        now = dt.now()
         date_now = now.strftime("%d.%m.%Y")
         prefix = ""
 
