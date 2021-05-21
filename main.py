@@ -96,20 +96,20 @@ class general_stuff(commands.Cog):
                               color=0x00ffff,
                               timestamp=datetime.datetime.utcnow())
 
-        cases_km = prefix + cases.getCasesIn("KorntalMuenchingen")
-        cases_sd = prefix + cases.getCasesIn("Schwieberdingen")
-        cases_hm = prefix + cases.getCasesIn("Hemmingen")
+        cases_km = cases.getCasesIn("KorntalMuenchingen")
+        cases_sd = cases.getCasesIn("Schwieberdingen")
+        cases_hm = cases.getCasesIn("Hemmingen")
 
         embed.add_field(name="Korntal-Münchingen",
-                        value=cases_km + " // " + str(round(float(cases_km) * 5.07150827)),
+                        value=prefix + cases_km + " // " + str(round(float(cases_km) * 5.07150827)),
                         inline=True)
 
         embed.add_field(name="Schwieberdingen",
-                        value=cases_sd + " // " + str(round(float(cases_sd) * 8.77963126)),
+                        value=prefix + cases_sd + " // " + str(round(float(cases_sd) * 8.77963126)),
                         inline=True)
 
         embed.add_field(name="Hemmingen",
-                        value=cases_hm + " // " + str(round(float(cases_hm) * 12.3777695)),
+                        value=prefix + cases_hm + " // " + str(round(float(cases_hm) * 12.3777695)),
                         inline=True)
 
         ######################################################
