@@ -1,4 +1,5 @@
 import datetime
+from datetime import datetime
 import discord
 from discord.ext import commands
 import sched, time
@@ -15,7 +16,7 @@ bot = commands.Bot(command_prefix='?')
 async def on_ready():
     print("bot is ready for stuff")
     result = subprocess.check_output("git rev-parse --short HEAD", shell=True)
-    await bot.change_presence(activity=discord.Game("auf Version " + str(result.decode('utf-8'))),afk=True)
+    await bot.change_presence(activity=discord.Game("auf Version " + str(result.decode('utf-8'))), afk=True)
 
 class general_stuff(commands.Cog):
 
@@ -79,13 +80,23 @@ class general_stuff(commands.Cog):
         ratio_lb = (float(float(deaths_lb) * 100 / float(cases_lb)))
         ratio_de = (float(float(deaths_de) * 100 / float(cases_de)))
 
+        lb_time = cases.getValue("DashTime")
+        de_time = cases.getDateRKI()
+
+        now = datetime.now()
+        date_now = now.strftime("%d.%m.%Y")
+        prefix = ""
+
+        if str(date_now) == lb_time:
+            prefix = "⚠️"
+
         embed = discord.Embed(title="Corona-Zahlen " + emoji_lb + "/" + emoji_de,
                               color=0x00ffff,
                               timestamp=datetime.datetime.utcnow())
 
-        cases_km = cases.getCasesIn("KorntalMuenchingen")
-        cases_sd = cases.getCasesIn("Schwieberdingen")
-        cases_hm = cases.getCasesIn("Hemmingen")
+        cases_km = prefix + cases.getCasesIn("KorntalMuenchingen")
+        cases_sd = prefix + cases.getCasesIn("Schwieberdingen")
+        cases_hm = prefix + cases.getCasesIn("Hemmingen")
 
         embed.add_field(name="Korntal-Münchingen",
                         value=cases_km + " // " + str(round(float(cases_km)*5.07150827)),
@@ -102,20 +113,20 @@ class general_stuff(commands.Cog):
         ######################################################
 
         embed.add_field(name="7-Tage-Inzidenz " + emoji_lb,
-                        value=cases.getValue("sieben_T_Inz"),
+                        value=prefix + cases.getValue("sieben_T_Inz"),
                         inline=True)
 
         embed.add_field(name="7 Tage Inzidenz " + emoji_de,
                         value=cases.getSevenDayIncidence())
 
         embed.add_field(name="Erhebungsdatum ⏲",
-                        value=cases.getValue("DashTime") + "/" + cases.getDateRKI(),
+                        value=prefix + lb_time + "/" + de_time,
                         inline=False)
 
         ######################################################
 
         embed.add_field(name="Mortalität " + emoji_lb,
-                        value=str(round(ratio_lb, 2)) + "%",
+                        value=prefix + str(round(ratio_lb, 2)) + "%",
                         inline=True)
 
         embed.add_field(name="Mortalität " + emoji_de,
@@ -129,7 +140,7 @@ class general_stuff(commands.Cog):
         ######################################################
 
         embed.add_field(name="Neue Fälle " + emoji_lb + " (ARCGIS)",
-                        value="+" + cases.getValue("Diff_Faelle_Gesamt"),
+                        value=prefix + "+" + cases.getValue("Diff_Faelle_Gesamt"),
                         inline=True)
 
         embed.add_field(name="Neue Fälle " + emoji_de + " (RKI)",
